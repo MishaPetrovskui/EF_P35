@@ -163,9 +163,26 @@ class Program
                             var student = students[(int)Menu(studentNames)];
                             Console.WriteLine($"Редагуємо: {student}");
                             Console.Write("Нове ім'я: ");
-                            student.Name = Console.ReadLine();
+                            string inputName = Console.ReadLine();
+                            if (inputName != null && inputName != "")
+                                student.Name = inputName;
                             Console.Write("Новий середній бал: ");
-                            student.AVG = int.Parse(Console.ReadLine());
+                            string inputAVG = Console.ReadLine();
+                            if (inputAVG != null && inputAVG != "")
+                            {
+                                int newAVG = 0;
+                                bool correct = true;
+                                for (int i = 0; i < inputAVG.Length; i++)
+                                {
+                                    if (inputAVG[i] < '0' || inputAVG[i] > '1')
+                                        correct = false;
+                                }
+                                if (correct)
+                                {
+                                    newAVG = int.Parse(inputAVG);
+                                    student.AVG = newAVG;
+                                }
+                            }
                             var groups = context.Group.Include(g => g.curator).ToList();
                             List<string> groupNames = new List<string>();
                             foreach (var g in groups)
